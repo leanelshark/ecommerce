@@ -1,0 +1,8 @@
+body{
+    background: #1f1f1f;
+}
+
+
+main > .container {
+    padding: 1rem 0;
+}
