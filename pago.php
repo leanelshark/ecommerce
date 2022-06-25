@@ -137,9 +137,8 @@ if($productos !=null){
                                 <?php } ?>
 
                             <tr class="text-white">
-                                    <td colspan="3"></td>
                                     <td colspan="2">
-                                        <p class="h3 text-right text-white" id="total"><?php echo MONEDA . number_format($total, 2,'.',','); ?></p>
+                                        <p class="h3 text-end text-white" id="total"><?php echo MONEDA . number_format($total, 2,'.',','); ?></p>
                                     </td>
                             </tr>      
                         </tbody>
@@ -164,13 +163,13 @@ if($productos !=null){
         paypal.Buttons({
             createOrder: function(data, actions) {
             // Set up the transaction
-            return actions.order.create({
-                purchase_units: [{
-                amount: {
-                    value: '100.00'
-                }
-                }]
-            });
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: <?php echo $total; ?>
+                        }
+                    }]
+                });
             },
             style: {
             layout: 'vertical',
@@ -179,20 +178,29 @@ if($productos !=null){
             label:  'paypal'
         },
         onApprove: function(data, actions) {
-            // This function captures the funds from the transaction.
-            return actions.order.capture().then(function(details) {
-            // This function shows a transaction success message to your buyer.
-            window.location.href = "completdo.html";
+
+            let url = 'clases/captura.php'
+           
+            actions.order.capture().then(function(detalles) {
             
+                return fetch(url, {
+                    method: 'post',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        detalles:detalles
+                    })
+                })
             });
         },
         onCancel: function (data) {
             // Show a cancel page, or return to cart
-            window.location.href = "completdo.html";
+            window.location.href = "completado.html";
         },
         onError: function (err) {
             // For example, redirect to a specific error page
-            window.location.href = "completdo.html";
+            window.location.href = "completado.html";
         }
         }).render('#paypal-button-container');
 
