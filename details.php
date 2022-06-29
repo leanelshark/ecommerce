@@ -30,7 +30,7 @@ if ($id == '' || $token == '') {
                 $precio_desc = $precio - (($precio * $descuento) / 100);
                 $dir_images = 'images/productos/'.$id.'/';
 
-                $rutaImg = $dir_images . 'principal.webp';
+                $rutaImg = $dir_images . 'principal.jpeg';
 
                     if(!file_exists($rutaImg)){
                         $rutaImg = 'images/no-photo.png';
@@ -45,7 +45,7 @@ if ($id == '' || $token == '') {
 
 
                     while(($archivo = $dir->read()) != false){
-                        if($archivo != 'principal.webp' && (strpos($archivo,'webp') || strpos($archivo, 'png'))){
+                        if($archivo != 'principal.jpg' && (strpos($archivo,'jpg') || strpos($archivo, 'jpeg'))){
                             $imagenes[]= $dir_images . $archivo;
                         }
                     }
@@ -81,127 +81,160 @@ if ($id == '' || $token == '') {
 
     <!--HEADER-->
 
-    <header>
+    
 
-        <div class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light position-fixed top-0 start-0 w-100">
             <div class="container">
-                <a href="index.php" class="navbar-brand ">
-                    <strong>E-commerce</strong>
+                <a href="index.php" class="navbar-brand d-lg-none ">
+                   E-commerce
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
                     aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarHeader">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.php">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.php">Contacto</a>
-                        </li>
-                    </ul>
+                <div class="collapse navbar-collapse p-2 flex-column" id="navbarHeader">
+                    <div class="d-flex justify-content-center justify-content-lg-between flex-column flex-lg-row w-100">
+                        <form class="d-flex">
+                            <input type="search" class="form-control me-2" placeholder="Search"/>
+                            <button class="btn btn-outline-dark" type="submit"><i class="fas fa-search"></i></button>
+                        </form>
+                        <a class="navbar-brand d-none d-lg-block" href="index.php">E-commerce</a>
 
-                    <a href="checkout.php" class="btn btn-primary">
-                        Cart <span id="num_cart" class="badge bg-secondary"><?php echo $num_cart; ?></span>
-                    </a>
+                        <ul class="navbar-nav">
+                            <li class="nav-item d-flex align-items-center">
+                                <a class="nav-link mx-2" aria-current="page" href="index.php"><i class="fas fa-user"></i>My Account</a>
+                            </li>
+                            <li class="nav-item d-flex align-items-center">
+                                <a class="nav-link mx-2" href="checkout.php"><i class="fa fa-shopping-bag"></i>Bag</a>
+                                <span id="num_cart" class="badge rounded-pill bg-secondary"><?php echo $num_cart; ?></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="d-block w-100">
+                        <ul class="navbar-nav d-flex justify-content-center align-items-center pt-3">
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="#">Muebles</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="#">Mesas</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="#">Sillas</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="#">Sillones</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="#">About</a>
+                            </li>
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" href="#">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </header>
+        </nav>
+    
 
     <!--MAIN-->
+    <main>
+        <div class="container mt-5">
+            <div class="row ">
 
-    <div class="container mt-5">
-        <div class="row ">
-
-            <div class="col-md-6 order-md-1 ">
-                
-                <div id="carouselImage" class="carousel slide" data-bs-ride="carousel">
-
-                        <div class="carousel-inner">
-
-                            <div class="carousel-item active">
-                                <img  src="<?php echo $rutaImg; ?>" class="d-block w-100" alt="First slide">
-                            </div>
-
-                            <?php foreach($imagenes as $img){ ?>
-
-                            <div class="carousel-item">
-                                <img src="<?php echo $img; ?>" class="d-block w-100" alt="Second slide">
-                            </div>
-
-                            <?php } ?>
-
-                        </div>
-
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselImage"
-                            data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselImage"
-                            data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                </div>
-
-            </div>
-
-            <div class="col-md-6 order-md-2">
-
-                <h2 class="mb-3 text-primary">
-                  <?php echo $nombre; ?>
-                </h2>
-
-                <?php if($descuento > 0){ ?>
-
+                <div class="col-md-6 order-md-1 sliderImg">
                     
-                        <h5 class="text-danger">
-                            <del><?php echo MONEDA . number_format($precio, 2, '.',','); ?></del>
-                        </h5>
-                
-                        <h2 class="text-success">
-                            <?php echo MONEDA . number_format($precio_desc, 2, '.',','); ?>
-                            <span class="text-warning">
-                                 <?php echo $descuento; ?> % descuento
-                            </span>
-                        </h2>
+                    <div id="carouselImage" class="carousel slide" data-bs-ride="carousel">
 
-                <?php } else { ?>
+                            
 
-                <h2 class="text-success">
-                    <?php echo MONEDA . number_format($precio, 2, '.',','); ?>
-                </h2>
+                            <div class="carousel-inner">
 
-                <?php } ?>
+                                <div class="carousel-item active">
+                                    <img  src="<?php echo $rutaImg; ?>" class="d-block w-100" style="max-height: 1000px;" alt="First slide">
+                                </div>
 
-                <p class="lead">
-                    <?php echo $descripcion; ?>
-                </p>
+                                <?php foreach($imagenes as $img){ ?>
 
-                <div class="d-grid gap-3 col-10 mx-auto">
-                    <a href="checkout.php" 
-                            type="button" 
-                            class="btn btn-primary">
-                            Comprar Ahora
-                    </a>
-                    <button href="carrito.php" 
-                            type="button" 
-                            class="btn btn-outline-primary" 
-                            onclick="addProducto(<?php echo $id; ?>, '<?php echo $token_tmp;  ?>')">
-                            Agregar al carrito
-                    </button>
+                                <div class="carousel-item">
+                                    <img src="<?php echo $img; ?>" class="d-block w-100 " style="max-height: 1000px;" alt="Second slide">
+                                </div>
+
+                                <?php } ?>
+
+                            </div>
+
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselImage"
+                                data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselImage"
+                                data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 order-md-2 detallesProd">
+
+                    <h2 class="mb-3 text-primary">
+                    <?php echo $nombre; ?>
+                    </h2>
+
+                    <?php if($descuento > 0){ ?>
+
+                        
+                            <h5 class="text-danger">
+                                <del><?php echo MONEDA . number_format($precio, 2, '.',','); ?></del>
+                            </h5>
+                    
+                            <h2 class="text-success">
+                                <?php echo MONEDA . number_format($precio_desc, 2, '.',','); ?>
+                                <span class="text-warning">
+                                    <?php echo $descuento; ?> % descuento
+                                </span>
+                            </h2>
+
+                    <?php } else { ?>
+
+                    <h2 class="text-success">
+                        <?php echo MONEDA . number_format($precio, 2, '.',','); ?>
+                    </h2>
+
+                    <?php } ?>
+
+                    <p class="lead text-white">
+                        <?php echo $descripcion; ?>
+                    </p>
+
+                    <div class="col-3 my-3 text-white">Cantidad:
+                        <input class="form-control" id="cantidad" name="cantidad" type="number" min="1" max="10" value="1">
+                    </div>
+
+                    <div class="d-grid gap-3 col-10 mx-auto">
+                        <a href="checkout.php" 
+                                type="button" 
+                                class="btn btn-primary">
+                                Comprar Ahora
+                        </a>
+                        <button href="carrito.php" 
+                                type="button" 
+                                class="btn btn-outline-primary" 
+                                onclick="addProducto(<?php echo $id; ?>, cantidad.value, '<?php echo $token_tmp;  ?>')">
+                                Agregar al carrito
+                        </button>
+                    </div>
+
                 </div>
 
             </div>
-
+            
         </div>
-        
-    </div>
-
+    </main>
 
 
     <!-- JavaScript Bundle with Popper -->
@@ -210,10 +243,11 @@ if ($id == '' || $token == '') {
     </script>
 
     <script>
-        function addProducto(id,token){
+        function addProducto(id, cantidad, token){
             let url = 'clases/carrito.php'
             let formData = new FormData()
             formData.append('id', id)
+            formData.append('cantidad', cantidad)
             formData.append('token', token)
 
             fetch(url, {

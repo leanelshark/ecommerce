@@ -1,8 +1,18 @@
 body{
-    background: #1f1f1f;
+    padding-top: 8em;
 }
 
+.navbar{
+    z-index: 99;
+}
 
-main > .container {
-    padding: 1rem 0;
+.sliderFade{
+    animation: fade 0.5s ease;
+}
+.sliderThumb, .sliderMainImage{ 
+    cursor: pointer;
+}
+@keyframes fade {
+    0% { opacity:0;}
+    100%{ opacity:1;}
 }

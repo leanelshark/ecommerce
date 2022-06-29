@@ -3,8 +3,8 @@
 class Database{
 
     private $hostname = "localhost";
-    private $database = "ecommerce";
-    private $username = "root";
+    private $database = "thesharkcommunity";
+    private $username = "thesharkcommunity";
     private $password = "Nahiara_1991";
     private $charset = "utf8";
 

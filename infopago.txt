@@ -1,0 +1,11 @@
+http://localhost/misproyectos/pasarela/captura.php?collection_id=1277864237&collection_status=approved&
+
+payment_id=1277864237
+status=approved
+external_reference=null
+payment_type=credit_card
+merchant_order_id=5070811072
+preference_id=265346986-df507ee3-4071-4636-bc52-0da39b840892
+site_id=MLA
+processing_mode=aggregator
+merchant_account_id=null

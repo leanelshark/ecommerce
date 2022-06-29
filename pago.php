@@ -2,6 +2,14 @@
 
 require 'config/config.php';
 require 'config/database.php';
+require 'vendor/autoload.php';
+
+MercadoPago\SDK::setAccessToken(TOKEN_MP);
+
+$preference = new MercadoPago\Preference();
+$productos_mp = array();
+
+
 $db = new Database();
 $con = $db->conectar();
 
@@ -40,7 +48,7 @@ if($productos !=null){
     <link rel="stylesheet" href="css/style.css">
 
     <script src="https://www.paypal.com/sdk/js?client-id=<?php echo CLIENT_ID; ?>&components=buttons"></script>
-   
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
    
 
 </head>
@@ -86,8 +94,16 @@ if($productos !=null){
             
             <div class="col-6">
                 <h4>Detalles de pago</h4>
-                <div id="paypal-button-container"></div>
-
+                <div class="row">
+                    <div class="col-12">
+                        <div id="paypal-button-container"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="checkout-btn"></div>
+                    </div>
+                </div>
             </div>
             
             <div class="col-6">
@@ -120,6 +136,16 @@ if($productos !=null){
                                     $precio_desc = $precio - (($precio * $descuento) / 100);
                                     $subtotal = $cantidad * $precio_desc;
                                     $total += $subtotal;
+
+                                    $item = new MercadoPago\Item();
+                                    $item->id = $_id;
+                                    $item->title = $nombre;
+                                    $item->quantity = $cantidad;
+                                    $item->unit_price = $precio_desc;
+                                    $item->currency_id = "AR";
+
+                                    array_push($productos_mp, $item);
+                                    unset($item);
                                 
                                 ?>
                             <tr">
@@ -153,6 +179,20 @@ if($productos !=null){
 
     </div> 
 
+    <?php 
+
+    $preference->items = $productos_mp;
+    $preference->back_urls = array(
+        "success" => "http://localhost/misproyectos/pasarela/captura.php",
+        "failure" => "http://localhost/misproyectos/pasarela/fallo.php"
+    );
+    $preference->auto_return = "approved";
+    $preference->binary_mode = true;
+
+    $preference->save();
+      
+
+    ?>
 
 
     <!-- JavaScript Bundle with Popper -->
@@ -179,9 +219,13 @@ if($productos !=null){
         },
         onApprove: function(data, actions) {
 
-            let url = 'clases/captura.php'
+            
            
             actions.order.capture().then(function(detalles) {
+
+                console.log(detalles)
+
+                let url = 'clases/captura.php'
             
                 return fetch(url, {
                     method: 'post',
@@ -191,19 +235,41 @@ if($productos !=null){
                     body: JSON.stringify({
                         detalles:detalles
                     })
+                }).then(function(response){
+                    window.location.href = "completado.php?key=" + detalles['id'];
                 })
             });
         },
         onCancel: function (data) {
             // Show a cancel page, or return to cart
-            window.location.href = "completado.html";
+            alert("Pago cancelado");
+            console.log(data);
         },
         onError: function (err) {
             // For example, redirect to a specific error page
-            window.location.href = "completado.html";
+            alert("Error al procesar el pago");
+            console.log(data);
         }
         }).render('#paypal-button-container');
 
+    </script>
+
+    <script>
+    // Agrega credenciales de SDK
+    const mp = new MercadoPago("TEST-31df5324-1bc7-45f3-8a5b-2c4e45b6bcb7", {
+        locale: "es-AR",
+    });
+
+    // Inicializa el checkout
+    mp.checkout({
+        preference: {
+        id: "<?php echo $preference->id; ?>",
+        },
+        render: {
+        container: ".checkout-btn", // Indica el nombre de la clase donde se mostrará el botón de pago
+        label: "Pagar con MercadoPago", // Cambia el texto del botón de pago (opcional)
+        },
+    });
     </script>
 
   
