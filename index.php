@@ -9,10 +9,13 @@ $sql = $con->prepare("SELECT id, nombre, precio, descripcion FROM productos WHER
 $sql->execute();
 $resultado =$sql->fetchAll(PDO::FETCH_ASSOC);
 
-//session_destroy();
+session_destroy();
 //print_r($_SESSION);
 
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,6 +33,7 @@ $resultado =$sql->fetchAll(PDO::FETCH_ASSOC);
 </head>
 
 <body>
+
     <nav class="navbar navbar-expand-lg navbar-light bg-light position-fixed top-0 start-0 w-100">
         <div class="container">
                 <a href="index.php" class="navbar-brand d-lg-none ">
@@ -66,7 +70,7 @@ $resultado =$sql->fetchAll(PDO::FETCH_ASSOC);
                     <div class="d-block w-100">
                         <ul class="navbar-nav d-flex justify-content-center align-items-center pt-3">
                             <li class="nav-item mx-2">
-                                <a class="nav-link" href="#">Muebles</a>
+                                <a class="nav-link" href="muebles.php">Muebles</a>
                             </li>
                             <li class="nav-item mx-2">
                                 <a class="nav-link" href="#">Mesas</a>
@@ -98,6 +102,7 @@ $resultado =$sql->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </header>
         <h2 class="display-6 py-5">Most Popular</h2>
+
         <div class="d-flex justify-content-between align-items-center flex-column flex-lg-row my-5" id="new">
             <div class="card m-2">
                 <a href="./product.html">
@@ -109,14 +114,7 @@ $resultado =$sql->fetchAll(PDO::FETCH_ASSOC);
                     </p>
                     <small class="text-secondary">$20.000,00</small>
                 </div>
-                <button class="btn btn-outline-dark my-2" type="button"
-                        <a href="details.php?id=<?php echo $row['id']; ?>&token=<?php echo hash_hmac('sha1', $row['id'],KEY_TOKEN); ?>" >
-                            Detalles
-                        </a>
-                    </button>
-                    <button class="btn btn-dark my-2" type="button" onclick="addProducto(<?php echo $row['id']; ?>,'<?php echo hash_hmac('sha1', $row['id'],KEY_TOKEN); ?>')">
-                        Agregar al carrito
-                    </button>
+              
             </div>
             <div class="card m-2">
                 <a href="./product.html">
@@ -128,17 +126,10 @@ $resultado =$sql->fetchAll(PDO::FETCH_ASSOC);
                     </p>
                     <small class="text-secondary">$50.000,00</small>   
                 </div>
-                <button class="btn btn-outline-dark my-2" type="button"
-                        <a href="details.php?id=<?php echo $row['id']; ?>&token=<?php echo hash_hmac('sha1', $row['id'],KEY_TOKEN); ?>" >
-                            Detalles
-                        </a>
-                    </button>
-                    <button class="btn btn-dark my-2" type="button" onclick="addProducto(<?php echo $row['id']; ?>,'<?php echo hash_hmac('sha1', $row['id'],KEY_TOKEN); ?>')">
-                        Agregar al carrito
-                    </button>
+                
             </div>
             <div class="card m-2">
-                <a href="./product.html">
+                <a href="muebles.php">
                     <img src="./img/muebles/img1.jpg" alt="Product" class="card-img-top" height="300"/>
                 </a>
                 <div class="card-body">
@@ -147,15 +138,9 @@ $resultado =$sql->fetchAll(PDO::FETCH_ASSOC);
                     </p>
                     <small class="text-secondary">$8.000,00</small>
                 </div>
-                <button class="btn btn-outline-dark my-2" type="button"
-                        <a href="details.php?id=<?php echo $row['id']; ?>&token=<?php echo hash_hmac('sha1', $row['id'],KEY_TOKEN); ?>" >
-                            Detalles
-                        </a>
-                    </button>
-                    <button class="btn btn-dark my-2" type="button" onclick="addProducto(<?php echo $row['id']; ?>,'<?php echo hash_hmac('sha1', $row['id'],KEY_TOKEN); ?>')">
-                        Agregar al carrito
-                    </button>
+                
             </div>
+
             <div class="card m-2">
                 <a href="./product.html">
                     <img src="./img/sillas/img1.jpg" alt="Product" class="card-img-top" height="300"/>
@@ -166,14 +151,7 @@ $resultado =$sql->fetchAll(PDO::FETCH_ASSOC);
                     </p>
                     <small class="text-secondary">$4.000,00</small>
                 </div>
-                <button class="btn btn-outline-dark my-2" type="button"
-                        <a href="details.php?id=<?php echo $row['id']; ?>&token=<?php echo hash_hmac('sha1', $row['id'],KEY_TOKEN); ?>" >
-                            Detalles
-                        </a>
-                    </button>
-                    <button class="btn btn-dark my-2" type="button" onclick="addProducto(<?php echo $row['id']; ?>,'<?php echo hash_hmac('sha1', $row['id'],KEY_TOKEN); ?>')">
-                        Agregar al carrito
-                    </button>
+                
             </div>
 
         </div>
@@ -207,7 +185,7 @@ $resultado =$sql->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
-    <div class="row text-start align-items-center gy-5 my-5">
+    <div class="row text-start align-items-center gy-5 my-5">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
         <div class="col-12 col-md-6">
             <div>
                 <h2 class="display-4">Awards</h2>
@@ -218,15 +196,15 @@ $resultado =$sql->fetchAll(PDO::FETCH_ASSOC);
         <div class="col-12 col-md-6">
             <img src="./img/about/img2.jpg" class="w-100 h-100"/>
         </div>
-    </div>
+    </div>                                                                                                                    
     
-    <section class="my-5 mx-auto py-5" style="max-width:25em;">
+    <section class="my-5 mx-auto py-5" style="max-width:25em;">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
         <h2>Subscribe To Our Newsletter</h2>
         <form class="d-flex my-4">
             <input type="search" class="form-control me-2" placeholder="Your e-mail"/>
             <button class="btn btn-outline-dark" type="submit">Subscribe</button>
         </form>
-    </section>
+    </section>                                                                                                                                                                                                                                                                                                                                        
 
     <footer class="d-flex justify-content-between my-5 text-start flex-wrap">
         <ul class="nav flex-column">
@@ -287,56 +265,14 @@ $resultado =$sql->fetchAll(PDO::FETCH_ASSOC);
         </ul>
     </footer>
 </div>
-    <!--MAIN-->
+    
 
-    <!--<div class="container mt-5">
-
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-            <?php foreach($resultado as $row) { ?>
-        
-            <div class="col">
-
-                <div class="card shadow-sm">
-                    
-                    <?php
-
-                    $id= $row['id'];
-                    $imagen = "images/productos/" . $id . "/principal.jpeg";
-
-                    if(!file_exists($imagen)){
-                        $imagen = "images/no-photo.png";
-                    }
-
-                    ?>
-
-                    <img src="<?php echo $imagen;?>">
-
-                    <div class="card-body">
-
-                        <h5 class="card-title"><?php echo $row['nombre']; ?></h5>
-
-                        <p class="card-text">$<?php echo number_format($row['precio'],2,'.',',');?></p>
-                        
-                        
-
-                    </div>
-
-                </div>
-            
-            </div>
-
-            <?php } ?>
-
-        </div>
-
-    </div>-->
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
-    </script>
+    </script>                                                                     
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 
-    <script>
+<script>
             function addProducto(id,token){
                 let url = 'clases/carrito.php';
                 let formData = new FormData();
@@ -357,6 +293,7 @@ $resultado =$sql->fetchAll(PDO::FETCH_ASSOC);
             }
 
     </script>
+
 
 </body>
 
